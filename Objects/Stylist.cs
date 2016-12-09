@@ -128,6 +128,39 @@ namespace Salon.Objects
       return newStylist;
     }
 
+    public void Update(string newName)
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("UPDATE stylists SET name = @newName OUTPUT INSERTED.name WHERE id = @StylistId;", conn);
+
+      SqlParameter newNameParam = new SqlParameter();
+      newNameParam.ParameterName = "@newName";
+      newNameParam.Value = newName;
+      cmd.Parameters.Add(newNameParam);
+
+      SqlParameter idParam = new SqlParameter();
+      idParam.ParameterName = "@StylistId";
+      idParam.Value = this.Id;
+      cmd.Parameters.Add(idParam);
+
+      SqlDataReader rdr = cmd.ExecuteReader();
+
+      while(rdr.Read())
+      {
+        this.Name = rdr.GetString(0);
+      }
+      if(rdr != null)
+      {
+        rdr.Close();
+      }
+      if(conn != null)
+      {
+        conn.Close();
+      }
+    }
+
     public static void DeleteAll()
     {
       SqlConnection conn = DB.Connection();
