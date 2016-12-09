@@ -107,14 +107,14 @@ namespace Salon.Objects
       SqlDataReader rdr = cmd.ExecuteReader();
 
       int foundStylistId = 0;
-      string foundStylistType = null;
+      string foundStylistName = null;
 
       while (rdr.Read())
       {
         foundStylistId = rdr.GetInt32(0);
-        foundStylistType = rdr.GetString(1);
+        foundStylistName = rdr.GetString(1);
       }
-      Stylist newStylist = new Stylist(foundStylistType, foundStylistId);
+      Stylist newStylist = new Stylist(foundStylistName, foundStylistId);
 
       if (rdr != null)
       {

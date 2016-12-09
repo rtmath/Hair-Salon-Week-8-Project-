@@ -29,7 +29,7 @@ namespace Salon.Tests
     }
 
     [Fact]
-    public void Test_SaveStylistToDB()
+    public void Test_SaveStylistToDatabase()
     {
       Stylist testStylist = new Stylist("Mannah Hontana");
       testStylist.Save();

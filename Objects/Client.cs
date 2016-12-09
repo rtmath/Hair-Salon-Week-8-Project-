@@ -15,5 +15,163 @@ namespace Salon.Objects
       this.StylistId = sId;
       this.Id = cId;
     }
+
+    public override bool Equals(System.Object otherClient)
+    {
+      if (!(otherClient is Client))
+      {
+        return false;
+      }
+      else
+      {
+        Client newClient = (Client) otherClient;
+        bool checkId = (this.Id == newClient.Id);
+        bool checkName = (this.Name == newClient.Name);
+        bool checkStylist = (this.StylistId == newClient.Stylist.Id);
+        return (checkId && checkName);
+      }
+    }
+
+    public override int GetHashCode()
+    {
+      return this.Name.GetHashCode();
+    }
+
+    public static List<Client> GetAll()
+    {
+      List<Client> allClients = new List<Client>{};
+
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("SELECT * FROM clients;", conn);
+      SqlDataReader rdr = cmd.ExecuteReader();
+
+      while (rdr.Read())
+      {
+        int clientId = rdr.GetInt32(0);
+        string clientName = rdr.GetString(1);
+        int stylistId = rdr.GetInt32(2);
+        Client newClient = new Client(clientName, clientId, stylistId);
+        allClients.Add(newClient);
+      }
+
+      if(rdr != null)
+      {
+        rdr.Close();
+      }
+      if (conn != null)
+      {
+        conn.Close();
+      }
+
+      return allClients;
+    }
+
+    public void Save()
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("INSERT INTO clients (name) OUTPUT INSERTED.id VALUES(@ClientName)", conn);
+
+      SqlParameter nameParam = new SqlParameter();
+      nameParam.ParameterName = "@ClientName";
+      nameParam.Value = this.Name;
+      cmd.Parameters.Add(nameParam);
+      SqlDataReader rdr = cmd.ExecuteReader();
+
+      while (rdr.Read())
+      {
+        this.Id = rdr.GetInt32(0);
+      }
+      if (rdr != null)
+      {
+        rdr.Close();
+      }
+      if(conn != null)
+      {
+        conn.Close();
+      }
+    }
+
+    public static Client Find(int id)
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("SELECT * FROM clients WHERE id = (@ClientId)", conn);
+
+      SqlParameter idParam = new SqlParameter();
+      idParam.ParameterName   = "@ClientId";
+      idParam.Value = id.ToString();
+      cmd.Parameters.Add(idParam);
+      SqlDataReader rdr = cmd.ExecuteReader();
+
+      int foundClientId = 0;
+      string foundClientType = null;
+      int foundStylistId = 0;
+
+      while (rdr.Read())
+      {
+        foundClientId = rdr.GetInt32(0);
+        foundClientName = rdr.GetString(1);
+        foundStylistId = rdr.GetInt32(2);
+      }
+      Client newClient = new Client(foundClientName, foundClientId, foundStylistId);
+
+      if (rdr != null)
+      {
+        rdr.Close();
+      }
+      if (conn != null)
+      {
+        conn.Close();
+      }
+
+      return newClient;
+    }
+
+    public void Update(string newName)
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("UPDATE clients SET name = @newName OUTPUT INSERTED.name WHERE id = @ClientId;", conn);
+
+      SqlParameter newNameParam = new SqlParameter();
+      newNameParam.ParameterName = "@newName";
+      newNameParam.Value = newName;
+      cmd.Parameters.Add(newNameParam);
+
+      SqlParameter idParam = new SqlParameter();
+      idParam.ParameterName = "@ClientId";
+      idParam.Value = this.Id;
+      cmd.Parameters.Add(idParam);
+
+      SqlDataReader rdr = cmd.ExecuteReader();
+
+      while(rdr.Read())
+      {
+        this.Name = rdr.GetString(0);
+      }
+      if(rdr != null)
+      {
+        rdr.Close();
+      }
+      if(conn != null)
+      {
+        conn.Close();
+      }
+    }
+
+    public static void DeleteAll()
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+      SqlCommand cmd = new SqlCommand("DELETE FROM clients;", conn);
+      cmd.ExecuteNonQuery();
+      conn.Close();
+    }
   }
 }
