@@ -8,7 +8,8 @@ namespace Salon.Modules
     public HomeModule()
     {
       Get["/"] = _ => View["index.cshtml"];
-      //Insert your GETs and POSTs here
+      Get["/new_stylist"] = _ => View["new_sform.cshtml"];
+      Get["/new_client"] = _ => View["new_cform.cshtml"];
     }
   }
 }
