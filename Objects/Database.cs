@@ -1,5 +1,6 @@
 using System.Data;
 using System.Data.SqlClient;
+using Salon.Startup;
 
 namespace Salon.Objects
 {

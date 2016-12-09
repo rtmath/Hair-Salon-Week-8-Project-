@@ -9,7 +9,7 @@ namespace Salon.Objects
     public string Name {get;set;}
     public int StylistId {get; set;}
 
-    public Client(string cName, int sId, int cId = 0;)
+    public Client(string cName, int sId, int cId = 0)
     {
       this.Name = cName;
       this.StylistId = sId;
