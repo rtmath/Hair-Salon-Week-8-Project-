@@ -44,5 +44,25 @@ namespace Salon.Objects
 
       return allStylists;
     }
+
+    public override bool Equals(System.Object otherStylist)
+    {
+      if (!(otherStylist is Stylist))
+      {
+        return false;
+      }
+      else
+      {
+        Stylist newStylist = (Stylist) otherStylist;
+        bool checkId = (this.Id == newStylist.Id);
+        bool checkName = (this.Name == newStylist.Name);
+        return (checkId && checkName);
+      }
+    }
+
+    public override int GetHashCode()
+    {
+      return this.Name.GetHashCode();
+    }
   }
 }

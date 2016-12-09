@@ -20,6 +20,14 @@ namespace Salon.Tests
       Assert.Equal(0, Stylist.GetAll().Count);
     }
 
+    [Fact]
+    public void Test_OverloadedEquals()
+    {
+      Stylist stylist1 = new Stylist("Timmy Jenkins");
+      Stylist stylist2 = new Stylist("Timmy Jenkins");
+      Assert.Equal(stylist1, stylist2);
+    }
+
     public void Dispose()
     {
       //DeleteAll()
