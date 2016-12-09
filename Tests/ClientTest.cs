@@ -40,6 +40,17 @@ namespace Salon.Tests
       Assert.Equal(testList, result);
     }
 
+    [Fact]
+    public void Test_FindClientInDatabase()
+    {
+      Client newClient = new Client("Labe Incoln", 3);
+      newClient.Save();
+
+      Client foundClient = Client.Find(newClient.Id);
+
+      Assert.Equal(newClient, foundClient);
+    }
+
     public void Dispose()
     {
       Client.DeleteAll();

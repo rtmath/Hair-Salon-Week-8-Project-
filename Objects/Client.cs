@@ -102,7 +102,43 @@ namespace Salon.Objects
       {
         conn.Close();
       }
-      Console.WriteLine(this.Id + " "  + this.Name + " " + this.StylistId);
+    }
+
+    public static Client Find(int id)
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("SELECT * FROM clients WHERE id = (@ClientId)", conn);
+
+      SqlParameter idParam = new SqlParameter();
+      idParam.ParameterName   = "@ClientId";
+      idParam.Value = id.ToString();
+      cmd.Parameters.Add(idParam);
+      SqlDataReader rdr = cmd.ExecuteReader();
+
+      int foundClientId = 0;
+      string foundClientName = null;
+      int foundStylistId = 0;
+
+      while (rdr.Read())
+      {
+        foundClientId = rdr.GetInt32(0);
+        foundClientName = rdr.GetString(1);
+        foundStylistId = rdr.GetInt32(2);
+      }
+      Client newClient = new Client(foundClientName, foundStylistId, foundClientId);
+
+      if (rdr != null)
+      {
+        rdr.Close();
+      }
+      if (conn != null)
+      {
+        conn.Close();
+      }
+
+      return newClient;
     }
 
     public static void DeleteAll()
