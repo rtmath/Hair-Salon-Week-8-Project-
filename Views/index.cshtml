@@ -12,3 +12,11 @@
 <a href="/list_clients" class="btn btn-success">View Clients</a>
 <a href="remove_stylist" class="btn btn-danger">Remove a Stylist<a>
 <a href="remove_client" class="btn btn-danger">Remove a Client<a>
+
+@if (Model != null)
+{
+  foreach (var stylist in Model)
+  {
+    <li>@stylist.Name</li>
+  }
+}

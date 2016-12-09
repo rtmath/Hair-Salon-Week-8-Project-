@@ -6,7 +6,13 @@
 
 <form class="" action="/add_client" method="post">
   <input type="text" name="client-name" placeholder="Enter the Client's name here">
-  <button type="button" name="button">Add Client</button>
+  <select name="stylist-id">
+     @foreach (var stylist in Model)
+     {
+       <option value="@stylist.Id">@stylist.Name</option>
+     }
+  </select>
+  <button type="submit" name="button">Add Client</button>
 </form>
 
 <a href="/" class="btn btn-primary">Return to Home</a>
