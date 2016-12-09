@@ -40,6 +40,17 @@ namespace Salon.Tests
       Assert.Equal(testList, result);
     }
 
+    [Fact]
+    public void Test_FindStylistInDatabase()
+    {
+      Stylist newStylist = new Stylist("Mony Tontana");
+      newStylist.Save();
+
+      Stylist foundStylist = Stylist.Find(newStylist.Id);
+
+      Assert.Equal(newStylist, foundStylist);
+    }
+
     public void Dispose()
     {
       Stylist.DeleteAll();

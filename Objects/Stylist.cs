@@ -93,6 +93,41 @@ namespace Salon.Objects
       }
     }
 
+    public static Stylist Find(int id)
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("SELECT * FROM stylists WHERE id = (@StylistId)", conn);
+
+      SqlParameter idParam = new SqlParameter();
+      idParam.ParameterName   = "@StylistId";
+      idParam.Value = id.ToString();
+      cmd.Parameters.Add(idParam);
+      SqlDataReader rdr = cmd.ExecuteReader();
+
+      int foundStylistId = 0;
+      string foundStylistType = null;
+
+      while (rdr.Read())
+      {
+        foundStylistId = rdr.GetInt32(0);
+        foundStylistType = rdr.GetString(1);
+      }
+      Stylist newStylist = new Stylist(foundStylistType, foundStylistId);
+
+      if (rdr != null)
+      {
+        rdr.Close();
+      }
+      if (conn != null)
+      {
+        conn.Close();
+      }
+
+      return newStylist;
+    }
+
     public static void DeleteAll()
     {
       SqlConnection conn = DB.Connection();
