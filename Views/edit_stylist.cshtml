@@ -1,0 +1,12 @@
+@{
+  Layout="Shared/_Layout.cshtml";
+}
+
+<h3>@Model.Name:</h3>
+
+<form action="/editStylist/@Model.Id" method="post">
+  <input type="text" name="newName" required>
+  <button type="submit" name="button">Edit Stylist</button>
+</form>
+
+<a href="/list_stylists" class="btn btn-primary">Return to Previous Page</a>

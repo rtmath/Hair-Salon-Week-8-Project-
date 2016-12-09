@@ -70,6 +70,17 @@ namespace Salon.Modules
         results = results.ToList();
         return View["details.cshtml", results];
       };
+      Get["/edit_stylist/{id}"] = parameters =>
+      {
+        return View["edit_stylist.cshtml", Stylist.Find(parameters.id)];
+      };
+      Post["/editStylist/{id}"] = parameters =>
+      {
+        Stylist selectedStyling = Stylist.Find(parameters.id);
+        selectedStyling.Update(Request.Form["newname"]);
+        List<Stylist> allStylists = Stylist.GetAll();
+        return View["stylists.cshtml", allStylists];
+      };
     }
   }
 }
