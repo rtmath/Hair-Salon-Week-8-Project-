@@ -1,0 +1,19 @@
+@{
+  Layout="Shared/_Layout.cshtml";
+}
+
+<h2>Here are the stylists who are currently employed at Cut and Caboodle:</h2>
+@if (Model == null)
+{
+<h3> You don't have any stylists yet! </h3>
+}
+
+@if (Model != null)
+{
+  foreach (var stylist in Model)
+  {
+    <li>@stylist.Name</li>
+  }
+}
+
+<a href="/" class="btn btn-primary">Return to Home</a>

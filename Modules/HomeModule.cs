@@ -19,15 +19,23 @@ namespace Salon.Modules
       {
         Stylist newStylist = new Stylist(Request.Form["stylist-name"]);
         newStylist.Save();
-        List<Stylist> stylistList = Stylist.GetAll();
-        return View["index.cshtml", stylistList];
+        return View["index.cshtml"];
       };
       Post["/add_client"] = _ =>
       {
         Client newClient = new Client(Request.Form["client-name"], Request.Form["stylist-id"]);
         newClient.Save();
-        List<Client> clientList = Client.GetAll();
-        return View["index.cshtml", clientList];
+        return View["index.cshtml"];
+      };
+      Get["/list_stylists"] = _ =>
+      {
+        List<Stylist> allStylists = Stylist.GetAll();
+        return View["stylists.cshtml", allStylists];
+      };
+      Get["/list_clients"] = _ =>
+      {
+        List<Client> allClients = Client.GetAll();
+        return View["clients.cshtml", allClients];
       };
     }
   }
