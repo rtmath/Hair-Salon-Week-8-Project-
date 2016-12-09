@@ -37,6 +37,30 @@ namespace Salon.Modules
         List<Client> allClients = Client.GetAll();
         return View["clients.cshtml", allClients];
       };
+      Get["/remove_stylist"] = _ =>
+      {
+        List<Stylist> allStylists = Stylist.GetAll();
+        return View["remove_stylist.cshtml", allStylists];
+      };
+      Get["/remove_client"] = _ =>
+      {
+        List<Client> allClients = Client.GetAll();
+        return View["remove_client.cshtml", allClients];
+      };
+      Post["/delete_stylist"] = _ =>
+      {
+        Stylist stylistToTerm = Stylist.Find(Request.Form["stylist-id"]);
+        stylistToTerm.Delete();
+        List<Stylist> allStylists = Stylist.GetAll();
+        return View["remove_stylist.cshtml", allStylists];
+      };
+      Post["/delete_client"] = _ =>
+      {
+        Client clientToRemove = Client.Find(Request.Form["client-id"]);
+        clientToRemove.Delete();
+        List<Client> allClients = Client.GetAll();
+        return View["remove_client.cshtml", allClients];
+      };
     }
   }
 }
