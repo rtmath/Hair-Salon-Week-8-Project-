@@ -1,4 +1,5 @@
 using Nancy;
+using System.Linq;
 using System.Collections.Generic;
 using Salon.Objects;
 
@@ -60,6 +61,13 @@ namespace Salon.Modules
         clientToRemove.Delete();
         List<Client> allClients = Client.GetAll();
         return View["remove_client.cshtml", allClients];
+      };
+      Get["/details/{id}"] = parameters =>
+      {
+        List<Client> allClients = Client.GetAll();
+        IEnumerable<Client> results = allClients.Where(c => c.StylistId == parameters.Id);
+        results = results.ToList();
+        return View["details.cshtml", results];
       };
     }
   }
