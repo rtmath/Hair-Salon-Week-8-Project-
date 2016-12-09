@@ -6,7 +6,7 @@
 
 @if (Model.Count == 0)
 {
-  <h4>You don't have any clients.</h4>
+  <h4>You don't have any clients. (Oh no!)</h4>
 }
 @if (Model.Count > 0)
 {
@@ -20,5 +20,3 @@
   <button type="submit" name="button">Remove Client</button>
 </form>
 }
-
-<a href="/" class="btn btn-primary">Return to Home</a>

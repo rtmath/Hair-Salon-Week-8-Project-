@@ -6,6 +6,14 @@
     <link rel="stylesheet" href="../Content/css/styles.css" type="text/css">
   </head>
   <body>
-    @RenderBody()
+    <div id="picture">
+      @Html.Partial("header.cshtml")
+      <div class="container">
+        <div class="well">
+          @RenderBody()
+        </div>
+      </div>
+      @Html.Partial("footer.cshtml")
+    </div>
   </body>
 </html>
