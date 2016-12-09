@@ -163,7 +163,7 @@ namespace Salon.Objects
 
     public void Delete()
     {
-      SqlConnection conn   = DB.Connection();
+      SqlConnection conn = DB.Connection();
       conn.Open();
 
       SqlCommand cmd = new SqlCommand("DELETE FROM stylists WHERE id = @StylistId; DELETE FROM clients WHERE stylist_id = @StylistId;", conn);

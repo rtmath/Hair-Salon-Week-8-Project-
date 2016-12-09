@@ -174,11 +174,29 @@ namespace Salon.Objects
       }
     }
 
+    public void Delete()
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("DELETE FROM clients WHERE id = @ClientId", conn);
+      SqlParameter idParam = new SqlParameter();
+      idParam.ParameterName = "@ClientId";
+      idParam.Value = this.Id;
+      cmd.Parameters.Add(idParam);
+      cmd.ExecuteNonQuery();
+
+      if (conn != null)
+      {
+        conn.Close();
+      }
+    }
+
     public static void DeleteAll()
     {
       SqlConnection conn = DB.Connection();
       conn.Open();
-      SqlCommand cmd = new SqlCommand("DELETE FROM clients;", conn);
+      SqlCommand cmd = new SqlCommand("DELETE FROM clients; DELETE FROM stylists", conn);
       cmd.ExecuteNonQuery();
       conn.Close();
     }
