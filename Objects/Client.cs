@@ -17,22 +17,42 @@ namespace Salon.Objects
       this.Id = cId;
     }
 
-    public static List<Stylist> GetAll()
+    public override bool Equals(System.Object otherClient)
     {
-      List<Stylist> allStylists = new List<Stylist>{};
+      if (!(otherClient is Client))
+      {
+        return false;
+      }
+      else
+      {
+        Client newClient = (Client) otherClient;
+        bool checkId = (this.Id == newClient.Id);
+        bool checkName = (this.Name == newClient.Name);
+        return (checkId && checkName);
+      }
+    }
+
+    public override int GetHashCode()
+    {
+      return this.Name.GetHashCode();
+    }
+
+    public static List<Client> GetAll()
+    {
+      List<Client> allClients = new List<Client>{};
 
       SqlConnection conn = DB.Connection();
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("SELECT * FROM stylists;", conn);
+      SqlCommand cmd = new SqlCommand("SELECT * FROM clients;", conn);
       SqlDataReader rdr = cmd.ExecuteReader();
 
       while (rdr.Read())
       {
-        int stylistId = rdr.GetInt32(0);
-        string stylistName = rdr.GetString(1);
-        Stylist newStylist = new Stylist(stylistName, stylistId);
-        allStylists.Add(newStylist);
+        int clientId = rdr.GetInt32(0);
+        string clientName = rdr.GetString(1);
+        Client newClient = new Client(clientName, clientId);
+        allClients.Add(newClient);
       }
 
       if(rdr != null)
@@ -44,7 +64,7 @@ namespace Salon.Objects
         conn.Close();
       }
 
-      return allStylists;
+      return allClients;
     }
   }
 }

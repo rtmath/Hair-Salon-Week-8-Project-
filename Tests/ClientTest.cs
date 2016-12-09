@@ -20,6 +20,14 @@ namespace Salon.Tests
       Assert.Equal(0, Client.GetAll().Count);
     }
 
+    [Fact]
+    public void Test_OverloadedEquals()
+    {
+      Client client1 = new Client("Jhomas Tefferson", 1);
+      Client client2 = new Client("Jhomas Tefferson", 1);
+      Assert.Equal(client1, client2);
+    }
+
     public void Dispose()
     {
       //DeleteAll() here
