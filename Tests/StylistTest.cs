@@ -28,9 +28,21 @@ namespace Salon.Tests
       Assert.Equal(stylist1, stylist2);
     }
 
+    [Fact]
+    public void Test_SaveStylistToDB()
+    {
+      Stylist testStylist = new Stylist("Mannah Hontana");
+      testStylist.Save();
+
+      List<Stylist> result = Stylist.GetAll();
+      List<Stylist> testList = new List<Stylist>{testStylist};
+
+      Assert.Equal(testList, result);
+    }
+
     public void Dispose()
     {
-      //DeleteAll()
+      Stylist.DeleteAll();
     }
   }
 }

@@ -15,6 +15,27 @@ namespace Salon.Objects
       this.Id = sId;
     }
 
+
+    public override bool Equals(System.Object otherStylist)
+    {
+      if (!(otherStylist is Stylist))
+      {
+        return false;
+      }
+      else
+      {
+        Stylist newStylist = (Stylist) otherStylist;
+        bool checkId = (this.Id == newStylist.Id);
+        bool checkName = (this.Name == newStylist.Name);
+        return (checkId && checkName);
+      }
+    }
+
+    public override int GetHashCode()
+    {
+      return this.Name.GetHashCode();
+    }
+
     public static List<Stylist> GetAll()
     {
       List<Stylist> allStylists = new List<Stylist>{};
@@ -45,24 +66,40 @@ namespace Salon.Objects
       return allStylists;
     }
 
-    public override bool Equals(System.Object otherStylist)
+    public void Save()
     {
-      if (!(otherStylist is Stylist))
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("INSERT INTO stylists (name) OUTPUT INSERTED.id VALUES(@StylistName)", conn);
+
+      SqlParameter nameParam = new SqlParameter();
+      nameParam.ParameterName = "@StylistName";
+      nameParam.Value = this.Name;
+      cmd.Parameters.Add(nameParam);
+      SqlDataReader rdr = cmd.ExecuteReader();
+
+      while (rdr.Read())
       {
-        return false;
+        this.Id = rdr.GetInt32(0);
       }
-      else
+      if (rdr != null)
       {
-        Stylist newStylist = (Stylist) otherStylist;
-        bool checkId = (this.Id == newStylist.Id);
-        bool checkName = (this.Name == newStylist.Name);
-        return (checkId && checkName);
+        rdr.Close();
+      }
+      if(conn != null)
+      {
+        conn.Close();
       }
     }
 
-    public override int GetHashCode()
+    public static void DeleteAll()
     {
-      return this.Name.GetHashCode();
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+      SqlCommand cmd = new SqlCommand("DELETE FROM stylists;", conn);
+      cmd.ExecuteNonQuery();
+      conn.Close();
     }
   }
 }
