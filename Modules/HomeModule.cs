@@ -1,7 +1,7 @@
 using Nancy;
 using System.Collections.Generic;
 
-namespace EnterNamespaceHere //replace with your desired namespace
+namespace Salon.Modules
 {
   public class HomeModule : NancyModule
   {
