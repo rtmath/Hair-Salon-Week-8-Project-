@@ -28,9 +28,21 @@ namespace Salon.Tests
       Assert.Equal(client1, client2);
     }
 
+    [Fact]
+    public void Test_SaveClientToDatabase()
+    {
+      Client testClient = new Client("Weorge Joshington", 2);
+      testClient.Save();
+
+      List<Client> result = Client.GetAll();
+      List<Client> testList = new List<Client>{testClient};
+
+      Assert.Equal(testList, result);
+    }
+
     public void Dispose()
     {
-      //DeleteAll() here
+      Client.DeleteAll();
     }
   }
 }
