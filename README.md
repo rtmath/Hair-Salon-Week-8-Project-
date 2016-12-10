@@ -16,7 +16,7 @@ To Install this Program:
       * Server Name: (localdb)\mssqllocaldb
       * Authentication: Windows Authentication
     * Select _'New Query'_
-    * Enter the following Query into query window:
+    * Enter the following Query into the query window:
       * CREATE DATABASE hair_salon;
     * Click _'Execute'_
     * Then enter the following Query into the query window:
