@@ -1,0 +1,12 @@
+@{
+  Layout="Shared/_Layout.cshtml";
+}
+
+<h3>@Model.Name:</h3>
+
+<form action="/editClient/@Model.Id" method="post">
+  <input type="text" name="newName" required>
+  <button type="submit" name="button" placeholder="Edit this Client's name">Edit Client</button>
+</form>
+
+<a href="/list_clients" class="btn btn-primary topmargin">Return to Previous Page</a>

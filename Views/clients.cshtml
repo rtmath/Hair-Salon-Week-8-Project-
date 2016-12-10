@@ -10,8 +10,18 @@
 
 @if (Model.Count > 0)
 {
-  foreach (var client in Model)
-  {
-    <li>@client.Name</li>
-  }
+  <div class="blockcontainer">
+    <div class="leftblock">
+      @foreach (var client in Model)
+      {
+        <li>@client.Name</li>
+      }
+    </div>
+    <div class="rightblock">
+      @foreach (var client in Model)
+      {
+        <li><a class="details" href="/edit_client/@client.Id">Edit</a></li>
+      }
+    </div>
+  </div>
 }

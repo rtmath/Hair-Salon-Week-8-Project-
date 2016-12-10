@@ -74,12 +74,23 @@ namespace Salon.Modules
       {
         return View["edit_stylist.cshtml", Stylist.Find(parameters.id)];
       };
+      Get["/edit_client/{id}"] = parameters =>
+      {
+        return View["edit_client.cshtml", Client.Find(parameters.id)];
+      };
       Post["/editStylist/{id}"] = parameters =>
       {
-        Stylist selectedStyling = Stylist.Find(parameters.id);
-        selectedStyling.Update(Request.Form["newname"]);
+        Stylist selectedStylist = Stylist.Find(parameters.id);
+        selectedStylist.Update(Request.Form["newName"]);
         List<Stylist> allStylists = Stylist.GetAll();
         return View["stylists.cshtml", allStylists];
+      };
+      Post["/editClient/{id}"] = parameters =>
+      {
+        Client selectedStyling = Client.Find(parameters.id);
+        selectedStyling.Update(Request.Form["newName"]);
+        List<Client> allClients = Client.GetAll();
+        return View["clients.cshtml", allClients];
       };
     }
   }
