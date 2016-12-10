@@ -5,8 +5,10 @@
 <h3>@Model.Name:</h3>
 
 <form action="/editClient/@Model.Id" method="post">
-  <input type="text" name="newName" required>
-  <button type="submit" name="button" placeholder="Edit this Client's name">Edit Client</button>
+  <input type="hidden" name="_method" value="PATCH">
+  <input name="client-id" type="hidden" value="@Model.Id">
+  <input type="text" name="newName" placeholder="Edit this Client's name" required>
+  <button type="submit" name="button">Edit Client</button>
 </form>
 
 <a href="/list_clients" class="btn btn-primary topmargin">Return to Previous Page</a>

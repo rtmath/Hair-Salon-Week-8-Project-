@@ -49,14 +49,14 @@ namespace Salon.Modules
         List<Client> allClients = Client.GetAll();
         return View["remove_client.cshtml", allClients];
       };
-      Post["/delete_stylist"] = _ =>
+      Delete["/delete_stylist"] = _ =>
       {
         Stylist stylistToTerm = Stylist.Find(Request.Form["stylist-id"]);
         stylistToTerm.Delete();
         List<Stylist> allStylists = Stylist.GetAll();
         return View["remove_stylist.cshtml", allStylists];
       };
-      Post["/delete_client"] = _ =>
+      Delete["/delete_client"] = _ =>
       {
         Client clientToRemove = Client.Find(Request.Form["client-id"]);
         clientToRemove.Delete();
@@ -78,14 +78,14 @@ namespace Salon.Modules
       {
         return View["edit_client.cshtml", Client.Find(parameters.id)];
       };
-      Post["/editStylist/{id}"] = parameters =>
+      Patch["/editStylist/{id}"] = parameters =>
       {
         Stylist selectedStylist = Stylist.Find(parameters.id);
         selectedStylist.Update(Request.Form["newName"]);
         List<Stylist> allStylists = Stylist.GetAll();
         return View["stylists.cshtml", allStylists];
       };
-      Post["/editClient/{id}"] = parameters =>
+      Patch["/editClient/{id}"] = parameters =>
       {
         Client selectedStyling = Client.Find(parameters.id);
         selectedStyling.Update(Request.Form["newName"]);

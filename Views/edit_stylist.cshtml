@@ -5,8 +5,10 @@
 <h3>@Model.Name:</h3>
 
 <form action="/editStylist/@Model.Id" method="post">
-  <input type="text" name="newName" required>
-  <button type="submit" name="button" placeholder="Edit this Stylist's name">Edit Stylist</button>
+  <input type="hidden" name="_method" value="PATCH">
+  <input name="client-id" type="hidden" value="@Model.Id">
+  <input type="text" name="newName" placeholder="Edit this Stylist's name" required>
+  <button type="submit" name="button">Edit Stylist</button>
 </form>
 
 <a href="/list_stylists" class="btn btn-primary topmargin">Return to Previous Page</a>
