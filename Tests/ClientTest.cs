@@ -91,6 +91,7 @@ namespace Salon.Tests
     public void Dispose()
     {
       Client.DeleteAll();
+      Stylist.DeleteAll();
     }
   }
 }
