@@ -10,53 +10,53 @@ namespace Salon.Modules
     public HomeModule()
     {
       Get["/"] = _ => View["index.cshtml"];
-      Get["/new_stylist"] = _ => View["new_sform.cshtml"];
-      Get["/new_client"] = _ =>
+      Get["/stylist/new"] = _ => View["new_sform.cshtml"];
+      Get["/client/new"] = _ =>
       {
         List<Stylist> allStylists = Stylist.GetAll();
         return View["new_cform.cshtml", allStylists];
       };
-      Post["/add_stylist"] = _ =>
+      Post["/stylist/add"] = _ =>
       {
         Stylist newStylist = new Stylist(Request.Form["stylist-name"]);
         newStylist.Save();
         return View["new_sform.cshtml"];
       };
-      Post["/add_client"] = _ =>
+      Post["/client/add"] = _ =>
       {
         Client newClient = new Client(Request.Form["client-name"], Request.Form["stylist-id"]);
         newClient.Save();
         List<Stylist> allStylists = Stylist.GetAll();
         return View["new_cform.cshtml", allStylists];
       };
-      Get["/list_stylists"] = _ =>
+      Get["/stylists/list"] = _ =>
       {
         List<Stylist> allStylists = Stylist.GetAll();
         return View["stylists.cshtml", allStylists];
       };
-      Get["/list_clients"] = _ =>
+      Get["/clients/list"] = _ =>
       {
         List<Client> allClients = Client.GetAll();
         return View["clients.cshtml", allClients];
       };
-      Get["/remove_stylist"] = _ =>
+      Get["/stylist/remove"] = _ =>
       {
         List<Stylist> allStylists = Stylist.GetAll();
         return View["remove_stylist.cshtml", allStylists];
       };
-      Get["/remove_client"] = _ =>
+      Get["/client/remove"] = _ =>
       {
         List<Client> allClients = Client.GetAll();
         return View["remove_client.cshtml", allClients];
       };
-      Delete["/delete_stylist"] = _ =>
+      Delete["/stylist/delete"] = _ =>
       {
         Stylist stylistToTerm = Stylist.Find(Request.Form["stylist-id"]);
         stylistToTerm.Delete();
         List<Stylist> allStylists = Stylist.GetAll();
         return View["remove_stylist.cshtml", allStylists];
       };
-      Delete["/delete_client"] = _ =>
+      Delete["/client/delete"] = _ =>
       {
         Client clientToRemove = Client.Find(Request.Form["client-id"]);
         clientToRemove.Delete();
@@ -70,22 +70,22 @@ namespace Salon.Modules
         results = results.ToList();
         return View["details.cshtml", results];
       };
-      Get["/edit_stylist/{id}"] = parameters =>
+      Get["/stylist/edit/{id}"] = parameters =>
       {
         return View["edit_stylist.cshtml", Stylist.Find(parameters.id)];
       };
-      Get["/edit_client/{id}"] = parameters =>
+      Get["/client/edit/{id}"] = parameters =>
       {
         return View["edit_client.cshtml", Client.Find(parameters.id)];
       };
-      Patch["/editStylist/{id}"] = parameters =>
+      Patch["/stylist/update/{id}"] = parameters =>
       {
         Stylist selectedStylist = Stylist.Find(parameters.id);
         selectedStylist.Update(Request.Form["newName"]);
         List<Stylist> allStylists = Stylist.GetAll();
         return View["stylists.cshtml", allStylists];
       };
-      Patch["/editClient/{id}"] = parameters =>
+      Patch["/client/update/{id}"] = parameters =>
       {
         Client selectedStyling = Client.Find(parameters.id);
         selectedStyling.Update(Request.Form["newName"]);
